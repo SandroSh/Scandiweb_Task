@@ -1,14 +1,14 @@
 .productList {
-  max-width: 1700px;
+  max-width: 2000px;
   margin: 0 auto;
-  padding: 50px;
+  padding: 15px 50px 50px 50px;
   .header-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 50px;
-
+    padding: 30px;
+    border-bottom: 7px #daa06d dotted;
     h1 {
       color: rgba(16, 86, 82, .75);
       font-size: 3em;
@@ -18,7 +18,6 @@
       button {
         margin: 10px;
         outline: none;
-        // color: #daa06d;
         color: rgba(16, 86, 82, .75);
         padding: 1em;
         padding-left: 3em;

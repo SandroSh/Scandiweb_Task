@@ -8,7 +8,7 @@ const ProductList = () => {
       <div className='header-container'>
         <h1>Product List</h1>
         <div className='buttons-container'>
-          <Link to={'./add'}>
+          <Link to={'./addproduct'}>
             <button>ADD</button>
           </Link>
           <button id='delete-product-btn'>MASS DELETE</button>
