@@ -1,55 +1,123 @@
-import { Link } from 'react-router-dom'
+import {Link, useNavigate } from 'react-router-dom'
 import './addItem.scss'
 import '../ProductListPage/productList.scss'
 import { ChangeEvent, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 
 
-type product = 'furniture' | 'book' | 'DVD' | undefined;
+interface Furniture {
+  height: string;
+  width: string;
+  length: string;
+}
+interface DVD {
+  size: string;
+}
+interface Book {
+  weight: string;
+}
+
+interface Product {
+  SKU: string;
+  name: string;
+  price: string;
+  type: 'furniture' | 'book' | 'DVD';
+  productData: Furniture | DVD | Book | null;
+}
+
 
 const AddItem = () => {
-  const [productType, setProductType] = useState<product>(undefined);
+  const [product, setProduct] = useState<Product | undefined>(undefined);
+  const navigate = useNavigate();
 
+  // Function For handling SKU, Name, Price, Type inputs
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
 
-
-
-  const handleTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value)
     if (e.target.value) {
-      setProductType(e.target.value as product);
-    } else {
-      setProductType(undefined);
+
+      let name = '';
+      const value = e.target.value;
+
+      if (e.target.name === 'select') {
+        name = e.target.value;
+        console.log(name);
+      } else {
+        name = e.target.name;
+      }
+
+      if (product) {
+
+        if (e.target.type !== 'select-one') {
+          setProduct({ ...product, [name]: value });
+        } else {
+          setProduct({ ...product, type: value as Product['type'] });
+        }
+
+      } else {
+        const newProduct: Product = {
+          SKU: '',
+          name: '',
+          price: '',
+          type: name as 'furniture' | 'book' | 'DVD',
+          productData: null,
+        }
+        setProduct({ ...newProduct, [name]: value });
+      }
     }
 
   }
-  
+//  Function for handling  Sizes or  Weight
+  const handleDetailsChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    if (product) {
+      setProduct({ ...product, productData: { ...product.productData, [name]: value } as unknown as Product['productData'] })
+    }
+    console.log(product);
+  }
+
+  // Function renders specific inputs according to chosen product type
   const renderFields = () => {
-    switch (productType) {
+    switch (product?.type) {
       case 'DVD':
         return (
           <>
-            <label htmlFor="size">Size (MB):</label><br />
-            <input type="text" id="size" name="size" /><br /><br />
-            <p>Product description: Please provide the size in MB.</p>
+            <div className="input_container">
+              <label>Size (MB):</label>
+              <input type="text" id="#size" name="size" placeholder='1024' onChange={(e) => handleDetailsChange(e)} />
+            </div>
+            <p>Product description: Please provide <br />the size in MB.</p>
           </>
         );
       case 'furniture':
         return (
-          <> 
-            <label htmlFor="height">Height (CM):</label>
-            <input type="text" id="height" name="height" />
-            <label htmlFor="width">Width (CM):</label>
-            <input type="text" id="width" name="width" />
-            <label htmlFor="length">Length (CM):</label>
-            <input type="text" id="length" name="length" />
-            <p>Product description: Please provide dimensions in HxWxL format.</p>
+          <>
+            <div className='input_container' style={{ marginTop: '-1px' }}>
+              <label>Height (CM):</label>
+              <input type="text" id="#height" placeholder='97' name="height" onChange={(e) => handleDetailsChange(e)} />
+            </div>
+            <div className='input_container'>
+              <label>Width (CM):</label>
+              <input type="text" id="#width" name="width" placeholder='125' onChange={(e) => handleDetailsChange(e)} />
+            </div>
+            <div className='input_container'>
+              <label>Length (CM):</label>
+              <input type="text" id="#length" name="length" placeholder='89' onChange={(e) => handleDetailsChange(e)} />
+            </div>
+
+            <p>Product description: Please provide <br />dimensions in HxWxL format.</p>
+
           </>
         );
       case 'book':
         return (
           <>
-            <label htmlFor="weight">Weight (KG):</label><br />
-            <input type="text" id="weight" name="weight" /><br /><br />
-            <p>Product description: Please provide the weight in KG.</p>
+            <div className="input_container">
+              <label>Weight (KG):</label>
+              <input type="text" id="#weight" name="weight" placeholder='0.7' onChange={(e) => handleDetailsChange(e)} />
+            </div>
+            <p>Product description: Please provide <br />the weight in KG.</p>
           </>
         );
       default:
@@ -57,38 +125,47 @@ const AddItem = () => {
     }
   };
 
+  const handleSubmit = () => {
+    if (product && Object.values(product).every(value => value !== null && value !== undefined && value !== '')) {
+      navigate('/')
+    }else{
+      toast("Please Fill all Inputs Correctly", { icon: '📢' })
+    }
+  }
+
   return (
     <div className='productList'>
 
       <div className='header-container'>
         <h1>Add Product</h1>
         <div className='buttons-container'>
+          <button onClick={handleSubmit}>Save</button>
           <Link to={'/'}>
-            <button>Save</button>
-          </Link>
           <button>Cancel</button>
+          </Link>
         </div>
       </div>
+
       <form action="" id='product_form'>
-        <div className='main_inputs_container'>
+        <div>
           <div className='input_container'>
             <label>SKU</label>
-            <input type="text" placeholder='ergwe-3wqc-97f2e' />
+            <input type="text" name='SKU' id='#sku' placeholder='ergwe-3wqc-97f2e' onChange={(e) => handleChange(e)} required />
           </div>
 
           <div className='input_container'>
             <label>Name</label>
-            <input type="text" placeholder='Bedroom Chair' />
+            <input type="text" name='name' id='#name' placeholder='Bedroom Chair' onChange={(e) => handleChange(e)} required />
           </div>
 
           <div className='input_container'>
             <label>Price ($)</label>
-            <input type="text" placeholder='700$' required />
+            <input type='number' name='price' id='#price' placeholder='700$' onChange={(e) => handleChange(e)} required />
           </div>
 
           <div className='input_container'>
             <label>Type Switcher</label>
-            <select id="productType" onChange={(e) => handleTypeChange(e)} required>
+            <select id="#productType" name='select' onChange={(e) => handleChange(e)} required>
               <option value="">Select Type</option>
               <option value="furniture">Furniture</option>
               <option value="book">Book</option>
@@ -102,7 +179,7 @@ const AddItem = () => {
           }
         </div>
       </form>
-
+      <Toaster />
     </div>
   )
 }

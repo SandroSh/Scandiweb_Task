@@ -31,7 +31,14 @@
     }
   }
 
-  .dynamic_inputs_container{
+  .dynamic_inputs_container {
     margin-left: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+
+    p {
+      color: rgba(16, 86, 82, 0.75);
+    }
   }
 }
