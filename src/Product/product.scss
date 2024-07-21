@@ -1,0 +1,70 @@
+.main-div {
+  width: 230px;
+  height: 210px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+
+  checkbox-wrapper input[type="checkbox"] {
+    visibility: hidden;
+    display: none;
+  }
+  .checkbox-wrapper *,
+  .checkbox-wrapper ::after,
+  .checkbox-wrapper ::before {
+    box-sizing: border-box;
+    user-select: none;
+  }
+  .checkbox-wrapper {
+    position: relative;
+    display: block;
+    overflow: hidden;
+
+    .label {
+      cursor: pointer;
+    }
+    .delete-checkbox {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      opacity: 0;
+    }
+    .label svg {
+      vertical-align: middle;
+    }
+
+    .path1 {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      transition: 0.5s stroke-dashoffset;
+      opacity: 0;
+    }
+    .delete-checkbox:checked + label svg g path {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+
+  .upper-div {
+    width: 100%;
+    z-index: 4;
+    border-bottom: 5px dotted #daa06d;
+    background-color: white;
+   
+    .pin-wrapper {
+      position: relative;
+      #pushpinIcon {
+        width: 40px;
+        aspect-ratio: 1;
+        position: absolute;
+        top: -50px;
+        right: -20px;
+        
+      }
+    }
+  }
+  h3 {
+    color: rgba(16, 86, 82, 0.75) !important;
+    text-align: center;
+    margin:5px 0;
+  }
+}

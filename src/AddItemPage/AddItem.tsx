@@ -5,19 +5,19 @@ import { ChangeEvent, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 
 
-interface Furniture {
+export type Furniture  = {
   height: string;
   width: string;
   length: string;
 }
-interface DVD {
+export type DVD  = {
   size: string;
 }
-interface Book {
+export type Book = {
   weight: string;
 }
 
-interface Product {
+export interface ProductType {
   SKU: string;
   name: string;
   price: string;
@@ -27,7 +27,7 @@ interface Product {
 
 
 const AddItem = () => {
-  const [product, setProduct] = useState<Product | undefined>(undefined);
+  const [product, setProduct] = useState<ProductType | undefined>(undefined);
   const navigate = useNavigate();
 
   // Function For handling SKU, Name, Price, Type inputs
@@ -50,11 +50,11 @@ const AddItem = () => {
         if (e.target.type !== 'select-one') {
           setProduct({ ...product, [name]: value });
         } else {
-          setProduct({ ...product, type: value as Product['type'] });
+          setProduct({ ...product, type: value as ProductType['type'] });
         }
 
       } else {
-        const newProduct: Product = {
+        const newProduct: ProductType = {
           SKU: '',
           name: '',
           price: '',
@@ -72,7 +72,7 @@ const AddItem = () => {
     const value = e.target.value;
 
     if (product) {
-      setProduct({ ...product, productData: { ...product.productData, [name]: value } as unknown as Product['productData'] })
+      setProduct({ ...product, productData: { ...product.productData, [name]: value } as unknown as ProductType['productData'] })
     }
     console.log(product);
   }

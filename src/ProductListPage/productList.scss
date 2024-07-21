@@ -10,7 +10,7 @@
     padding: 30px;
     border-bottom: 7px #daa06d dotted;
     h1 {
-      color: rgba(16, 86, 82, .75);
+      color: rgba(16, 86, 82, 0.75);
       font-size: 3em;
     }
 
@@ -18,7 +18,7 @@
       button {
         margin: 10px;
         outline: none;
-        color: rgba(16, 86, 82, .75);
+        color: rgba(16, 86, 82, 0.75);
         padding: 1em;
         padding-left: 3em;
         padding-right: 3em;
@@ -34,5 +34,9 @@
         }
       }
     }
+  }
+
+  .products-container {
+    margin-top: 70px;
   }
 }
