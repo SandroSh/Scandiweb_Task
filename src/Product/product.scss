@@ -46,25 +46,37 @@
 
   .upper-div {
     width: 100%;
-    z-index: 4;
-    border-bottom: 5px dotted #daa06d;
-    background-color: white;
-   
+    // border-bottom: 5px dotted #daa06d;
+    background-color: #eaddca;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .pin-wrapper {
-      position: relative;
-      #pushpinIcon {
-        width: 40px;
-        aspect-ratio: 1;
-        position: absolute;
-        top: -50px;
-        right: -20px;
-        
+      // position: relative;
+      // #pushpinIcon {
+      //   width: 40px;
+      //   aspect-ratio: 1;
+      //   position: absolute;
+      //   top: -50px;
+      //   right: -20px;
+
+      // }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      .circle {
+        background-color: white;
+        width: 17px;
+        height: 17px;
+        margin: 5px;
+        border-radius: 50%;
       }
     }
   }
   h3 {
     color: rgba(16, 86, 82, 0.75) !important;
     text-align: center;
-    margin:5px 0;
+    margin: 5px 0;
   }
 }
